@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
-    'jalali_date_new',
+    'khayyam',
     'users.apps.UsersConfig',
     'courts',
 ]
@@ -122,4 +122,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+JALALI_DATE_DEFAULTS = {
+  'LIST_DISPLAY_AUTO_CONVERT': True,
+  'Strftime': {
+    'date': '%Y/%m/%d',
+    'datetime': '%H:%M:%S _ %Y/%m/%d',
+  }
 }
