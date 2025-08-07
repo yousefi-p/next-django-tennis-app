@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    'django_jalali',
     'khayyam',
     'users.apps.UsersConfig',
     'courts',
@@ -72,12 +73,12 @@ WSGI_APPLICATION = 'omclub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'omclubdb',
-        'USER': 'root',
+        'USER': 'postgres',
         'PASSWORD': 'P@ssw0rd',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
 
 }
 }
@@ -106,6 +107,7 @@ LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'Asia/Tehran'
 
+LOCALE = 'fa_IR.UTF-8'
 
 
 USE_I18N = True

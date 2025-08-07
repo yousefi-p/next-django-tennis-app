@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django_jalali.db import models as jmodels
 
 
 class Court(models.Model):
@@ -16,9 +17,10 @@ class Coach(models.Model):
         return self.user.phone_number
 
 class TimeSlot(models.Model):
+    objects = jmodels.jManager()
     court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='timeslots', verbose_name='زمین')
-    start_time = models.DateTimeField(verbose_name='زمان شروع')
-    end_time = models.DateTimeField(verbose_name='زمان پایان')
+    start_time = jmodels.jDateTimeField(verbose_name='زمان شروع')
+    end_time = jmodels.jDateTimeField(verbose_name='زمان پایان')
     is_available = models.BooleanField(default=True, verbose_name='در دسترس')
 
     def __str__(self):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Court, Coach, TimeSlot, Reservation
 from khayyam import JalaliDatetime
+from django_jalali.serializers.serializerfield import JDateField, JDateTimeField
 
 
 class CourtSerializer(serializers.ModelSerializer):
@@ -9,6 +10,8 @@ class CourtSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CoachSerializer(serializers.ModelSerializer):
+    date = JDateField()
+    time = JDateTimeField()
     class Meta:
         model = Coach
         fields = '__all__'
