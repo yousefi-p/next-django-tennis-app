@@ -20,8 +20,10 @@ class UserManager(BaseUserManager):
     
 class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=11, unique=True, verbose_name='شماره تماس')
+    fullname = models.CharField(max_length=30, verbose_name='نام')
     is_active = models.BooleanField(default=True, verbose_name='فعال')
-    is_staff = models.BooleanField(default=False, verbose_name='کارمند')
+    is_player = models.BooleanField(default=True, verbose_name='بازیکن')
+    is_staff = models.BooleanField(default=False, verbose_name='مربی')
     is_manager = models.BooleanField(default=False, verbose_name='مدیر')
     is_superuser = models.BooleanField(default=False, verbose_name='ادمین')
 

@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 from django_jalali.db import models as jmodels
+from django.conf import settings
 
 
 class Court(models.Model):
@@ -8,6 +9,10 @@ class Court(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def courts_count(self):
+        return self.name.count()
+        
 
 class Coach(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='کاربر')
@@ -17,14 +22,23 @@ class Coach(models.Model):
         return self.user.phone_number
 
 class TimeSlot(models.Model):
-    objects = jmodels.jManager()
-    court = models.ForeignKey(Court, on_delete=models.CASCADE, related_name='timeslots', verbose_name='زمین')
-    start_time = jmodels.jDateTimeField(verbose_name='زمان شروع')
-    end_time = jmodels.jDateTimeField(verbose_name='زمان پایان')
-    is_available = models.BooleanField(default=True, verbose_name='در دسترس')
+    court = models.ForeignKey('Court', on_delete=models.CASCADE, related_name='time_slots')
+    start_time = models.TimeField(verbose_name='زمان شروع')
+    end_time = models.TimeField(verbose_name='زمان پایان')
+
 
     def __str__(self):
-        return f'{self.court.name} @ {self.start_time.strftime("%Y-%m-%d %H:%M")}'
+        return f'{self.start_time} - {self.end_time}'
+
+
+class AvailabilityRequest(models.Model):
+    court = models.ForeignKey(Court, on_delete=models.CASCADE)
+    slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
+    date = jmodels.jDateField()
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
+    processed_at = models.DateTimeField(auto_now=True)
+
 
 class Reservation(models.Model):
     timeslot = models.OneToOneField(TimeSlot, on_delete=models.CASCADE, verbose_name='سانس')
