@@ -20,6 +20,11 @@ class CourtNumberView(APIView):
         count = Court.objects.count()
         return Response({"count": count})
 
+class CourtTableInfoView(APIView):
+    def get(self, request):
+        court_info = Court.objects.model.court_table_field_info()
+        return Response({"court_info": court_info})
+
 
 class CoachViewSet(viewsets.ModelViewSet):
     queryset = Coach.objects.all()
